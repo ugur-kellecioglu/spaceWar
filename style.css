@@ -1,4 +1,12 @@
-#bullet {
+.canvas{
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+}
 
-    position: absolute;
+.player {
+    width: 100px;
+    height: 30px;
+    background-color:bisque;
+    border: 2px solid red;
 }
