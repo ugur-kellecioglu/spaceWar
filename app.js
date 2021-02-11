@@ -12,6 +12,17 @@ document.addEventListener('DOMContentLoaded',()=>{
         x:(canvas.width-playerWidth)/2,
         y:canvas.height-playerHeight - 50
     }
+
+    var bullet = {
+        x:player.x - 10 + player.width/2,
+        y:player.y,
+        height: 20,
+        width:20
+    }
+
+    var bullets = []
+
+
     function renderCanvas(){
         ctx.fillStyle = "green";
         ctx.fillRect(0,0, canvas.width, canvas.height);
@@ -21,29 +32,45 @@ document.addEventListener('DOMContentLoaded',()=>{
         ctx.fillRect(player.x, player.y, player.width, player.height);
     }
 
+    function renderBullet(i){
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(bullets[i].x, bullets[i].y, bullet.width, bullet.height);
+    }
     function update(){
         renderCanvas();
         renderPlayer();
 
         if(player.x < 0) player.x = 0;
         if(player.x >= canvas.width - player.width) player.x = canvas.width - player.width;
-  
-
+        for(let i = 0 ; i  < bullets.length; i++){
+            renderBullet(i);
+            bullets[i].y -=10;
+        }
     }
 
-    let interval = setInterval(update,10);
+    function moveBullet(){
+        bullet.x += 10;
+    }
+
+    let interval = setInterval(update,1000);
 
     document.addEventListener('keydown', (e)=>{
         if(e.key === "ArrowLeft"){
             player.x -= 20;
+            
         }
         else if(e.key === "ArrowRight"){
             player.x += 20;
         }
         else if(e.key === " "){
-            let bullet = document.createElement('div');
-            bullet.className = "bullet";
-            canvas.appendChild(bullet);
+            bullets.push({
+                x:player.x - 10 + player.width/2,
+                y:player.y,
+                height: 20,
+                width:20
+            });
+            console.log(player.x);
+            console.log(bullets);
         }
     })
 
